@@ -10,7 +10,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 const CONTAINER = "uploads";
 const ALLOWED_MIME = new Set(["image/jpeg", "image/png", "image/webp", "image/gif"]);
-const MAX_TOTAL_BYTES = 50 * 1024 * 1024; // 50MB
+const MAX_TOTAL_BYTES = 50 * 1024 * 1024;
 
 function esc(s) {
   return String(s ?? "")
@@ -33,7 +33,7 @@ module.exports = async function (context, req) {
     const bb = Busboy({ headers: req.headers });
 
     const fields = {};
-    const links = [];
+    const files = [];
     let total = 0;
 
     bb.on("field", (n, v) => fields[n] = v);
@@ -42,7 +42,10 @@ module.exports = async function (context, req) {
       if (n !== "images") return file.resume();
 
       const { filename, mimeType } = info;
-      if (!ALLOWED_MIME.has(mimeType)) throw new Error("Nem kép.");
+      if (!ALLOWED_MIME.has(mimeType)) {
+        file.resume();
+        throw new Error("Nem kép.");
+      }
 
       const chunks = [];
       file.on("data", d => {
@@ -51,26 +54,45 @@ module.exports = async function (context, req) {
         chunks.push(d);
       });
 
-      file.on("end", async () => {
-        const buf = Buffer.concat(chunks);
-        const name = `${Date.now()}_${filename.replace(/[^\w.\-]/g,"_")}`;
-        const blob = container.getBlockBlobClient(name);
-        await blob.uploadData(buf, { blobHTTPHeaders: { blobContentType: mimeType } });
-
-        const sas = generateBlobSASQueryParameters({
-          containerName: CONTAINER,
-          blobName: name,
-          permissions: BlobSASPermissions.parse("r"),
-          expiresOn: new Date(Date.now() + 7*24*60*60*1000)
-        }, blobService.credential).toString();
-
-        links.push({ name: filename, url: `${blob.url}?${sas}` });
+      file.on("end", () => {
+        files.push({
+          filename,
+          mimeType,
+          buffer: Buffer.concat(chunks)
+        });
       });
     });
 
-    await new Promise((res, rej) => { bb.on("finish", res); bb.on("error", rej); bb.end(body); });
+    await new Promise((res, rej) => {
+      bb.on("finish", res);
+      bb.on("error", rej);
+      bb.end(body);
+    });
 
-    if (!links.length) throw new Error("Nincs kép.");
+    if (files.length === 0) throw new Error("Nincs kép.");
+
+    const links = [];
+
+    for (const f of files) {
+      const safe = `${Date.now()}_${f.filename.replace(/[^\w.\-]/g,"_")}`;
+      const blob = container.getBlockBlobClient(safe);
+
+      await blob.uploadData(f.buffer, {
+        blobHTTPHeaders: { blobContentType: f.mimeType }
+      });
+
+      const sas = generateBlobSASQueryParameters({
+        containerName: CONTAINER,
+        blobName: safe,
+        permissions: BlobSASPermissions.parse("r"),
+        expiresOn: new Date(Date.now() + 7*24*60*60*1000)
+      }, blobService.credential).toString();
+
+      links.push({
+        name: f.filename,
+        url: `${blob.url}?${sas}`
+      });
+    }
 
     await resend.emails.send({
       from: "Weboldal <onboarding@resend.dev>",
