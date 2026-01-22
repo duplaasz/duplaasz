@@ -1,12 +1,12 @@
 {
   "routes": [
     {
-      "route": "/*.*",
-      "rewrite": "/{*path}"
+      "route": "/",
+      "rewrite": "/index.html"
     },
     {
       "route": "/*",
-      "rewrite": "/{*path}.html"
+      "rewrite": "/{path}.html"
     }
   ]
 }
