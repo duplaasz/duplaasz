@@ -1,20 +1,12 @@
 {
   "routes": [
     {
-      "route": "/_teszt",
-      "redirect": "/kapcsolat",
-      "statusCode": 302
+      "route": "/*.*",
+      "rewrite": "/{*path}"
     },
     {
-      "route": "/{*path}.{ext}",
-      "rewrite": "/{*path}.{ext}"
-    },
-    {
-      "route": "/{*path}",
+      "route": "/*",
       "rewrite": "/{*path}.html"
     }
-  ],
-  "responseOverrides": {
-    "404": { "rewrite": "/404.html" }
-  }
+  ]
 }
