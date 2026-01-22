@@ -1,0 +1,10 @@
+{
+  "name": "swa-api",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@azure/storage-blob": "^12.17.0",
+    "busboy": "^1.6.0",
+    "resend": "^3.2.0"
+  }
+}

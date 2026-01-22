@@ -25,7 +25,7 @@ function showPreviews(files) {
     output.innerHTML = "";
 
     [...files].forEach(file => {
-        if (!file.type.startsWith("image/")){
+        if (!file.type.startsWith("image/")) {
             fileError = true;
             images_error.innerHTML = 'Csak képfájlok tölthetők fel.';
             images.value = "";
@@ -129,14 +129,18 @@ form.addEventListener('submit', async (e) => {
         desc_error.innerHTML = '';
     }
     /*képek*/
-    if (images.files.length === 0) {
-        images_error.innerHTML = 'Minimum 1 kép feltöltése kötelező.'
+    let totalSize = 0;
+    for (const f of images.files) totalSize += f.size;
+
+    const MAX_TOTAL = 50 * 1024 * 1024;
+    if (totalSize > MAX_TOTAL) {
+        images_error.innerHTML = `A képek mérete túl nagy! (${totalSize}/50 MB)`;
         form_error = true;
     }
-    else {
+    else{
         images_error.innerHTML = '';
     }
-    /* beküldés, visszajelző üzenet */
+
     form_success.className = '';
 
     if (!form_error) {
@@ -144,12 +148,15 @@ form.addEventListener('submit', async (e) => {
         form_button.style.display = 'none';
         const formData = new FormData(form);
         try {
-            const response = await fetch("https://httpbin.org/post", { /* teszt link */
+            const response = await fetch("/api/contact", {
                 method: "POST",
                 body: formData,
             });
-            const data = await response.json();
-            console.log(JSON.stringify(data, null, 2));
+            const text = await response.text().catch(() => "");
+            if (!response.ok) {
+                console.log("API error:", response.status, text);
+                formSuccess("server_error");
+            }
             formSuccess(true);
         } catch (error) {
             formSuccess("server_error");
@@ -160,7 +167,6 @@ form.addEventListener('submit', async (e) => {
     }
 
 });
-/*írásnál validation reset*/
 
 firstname.addEventListener('input', () => {
     firstname_error.innerHTML = '';
@@ -197,6 +203,7 @@ dropzone.addEventListener("click", (e) => {
 
 dropzone.addEventListener("dragover", (e) => {
 
+    e.preventDefault();
     dropzone.classList.add("dragover");
 });
 
