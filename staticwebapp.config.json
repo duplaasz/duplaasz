@@ -4,9 +4,21 @@
       "route": "/",
       "rewrite": "/index.html"
     },
+
     {
-      "route": "/*",
-      "rewrite": "/{path}.html"
+      "route": "/kapcsolat",
+      "rewrite": "/kapcsolat.html"
+    },
+    {
+      "route": "/termekek",
+      "rewrite": "/termekek.html"
+    },
+    {
+      "route": "/galeria",
+      "rewrite": "/galeria.html"
     }
-  ]
+  ],
+  "responseOverrides": {
+    "404": { "rewrite": "/404.html" }
+  }
 }
