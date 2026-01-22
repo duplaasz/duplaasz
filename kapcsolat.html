@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="images/index_html/favicon/favicon.ico" type="image/x-icon">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=auto"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&display=auto"
+        rel="stylesheet">
+    <title>Termékek | DuplaÁsz</title>
+</head>
+
+<body>
+    <header>
+        <div class="left">
+            <div class="question">
+                <h4>Kérdése van?</h4>
+                <p><span>Mobil: </span>(30) 968 7505</p>
+                <p><span>Üzlet: </span>(36) 410 731</p>
+            </div>
+        </div>
+
+        <div class="about">
+            <div class="contact_icons">
+                <a class="fb" target=”_blank” href="https://www.facebook.com/profile.php?id=100064388901578"><img class="fb"
+                        src="images/index_html/footer/facebook_black.png" alt="facebook"></a>
+                <a href="mailto:hegyiistvan@gmail.com"><img class="mail" src="images/index_html/footer/mail_black.png"
+                        alt="email"></a>
+            </div>
+            <div class="shop">
+                <h4>Üzletünk</h4>
+                <p><a target=”_blank” href="https://maps.app.goo.gl/dn15Aty8yUmBXUTB7">3300 Eger Merengő u. 1.</a></p>
+            </div>
+        </div>
+        <div class="offer">
+            <a href="kapcsolat.html">
+                <p>Árajánlatkérés</p>
+            </a>
+            <div class="background"></div>
+        </div>
+
+    </header>
+    <div class="navbar_box">
+        <div class="navbar">
+            <a class="logolink" href="index.html"><img class="logo" src="images/index_html/header/header_logo.png"
+                    alt="logo"></a>
+            <div class="menu_toggle">
+                <div class="bars">
+                    <img src="images/index_html/navbar/bars.png" alt="menü megnyitása">
+                </div>
+                <div class="close">
+                    <img src="images/index_html/navbar/close.png" alt="menü bezárása">
+                </div>
+            </div>
+        </div>
+        <nav>
+            <div class="left">
+                <a href="index.html"><img class="logo" src="images/index_html/header/header_logo.png" alt="logo"></a>
+            </div>
+            <ul>
+                <li><a href="index.html">
+                        <p>Főoldal</p>
+                    </a></li>
+                <li><a href="termekek.html">
+                        <p>Termékek</p>
+                    </a></li>
+                <li><a href="galeria.html">
+                        <p>Galéria</p>
+                    </a></li>
+                <li><a class="active" href="kapcsolat.html">
+                        <p>Kapcsolat</p>
+                    </a></li>
+            </ul>
+            <div class="offer">
+                <a href="kapcsolat.html">
+                    <p>Árajánlatkérés</p>
+                </a>
+                <div class="background"></div>
+            </div>
+        </nav>
+    </div>
+
+
+    <main class="contact_main">
+        <div class="contact_box">
+            <div class="formbox">
+                <div class="offer_desc">
+                    <h2>Árajánlatkérés</h2>
+                    <p>Írja le adatait, illetve, hogy miben segíthetünk.</p>
+                    <p>Kérjük csatoljon minimum 1 képet is, hogy pontosabb árajánlattal tudjunk szolgálni.</p>
+                    <p>Minden mező kitöltése kötelező.</p>
+                </div>
+                <!-- <form id="form" action="https://rf.uni-corvinus.hu/webfejlesztes/receive.php" method="post" id="myform" novalidate> -->
+                <form id="form" autocomplete="on">
+                    <div class="offer-grid">
+                        <div class="field">
+                            <label id=lastname_label for="lastname">Vezetéknév</label>
+                            <input id="lastname" name="lastname" type="text" placeholder="Vezetéknév"
+                                autocomplete="given-name" />
+                            <span id="lastname_error"></span>
+                        </div>
+
+                        <div class="field">
+                            <label id=firstname_label for="firstname">Keresztnév</label>
+                            <input id="firstname" name="firstname" type="text" placeholder="Keresztnév"
+                                autocomplete="family-name" />
+                            <span id="firstname_error"></span>
+                        </div>
+
+
+                        <div class="field">
+                            <label id=phone_label for="phone">Telefonszám</label>
+                            <input id="phone" name="phone" type="text" placeholder="+36 …"
+                                autocomplete="tel-national" />
+                            <span id="phone_error"></span>
+                        </div>
+
+
+                        <div class="field">
+                            <label id=email_label for="email">E‑mail cím</label>
+                            <input id="email" name="email" type="text" placeholder="nev@pelda.hu"
+                                autocomplete="email" />
+                            <span id="email_error"></span>
+                        </div>
+
+
+                        <div class="field span-2">
+                            <label id=desc_label for="desc">Leírás</label>
+                            <textarea id="desc" name="description" rows="5"
+                                placeholder="Írja le, miben segíthetünk."></textarea>
+                            <span id="desc_error"></span>
+                        </div>
+
+
+                        <div id="dropzone" class="field span-2">
+                            <p>Húzza ide a képeket vagy <span class="click">kattintson ide</span> a tallózáshoz</p>
+                            <input id="images" name="images" type="file" accept="image/*" hidden multiple />
+                            <output id="file_list"></output>
+                            <button type="button" id="clear_images">Képek törlése</button>
+                        </div>
+                        <span id="images_error" class="span-2"></span>
+                    </div>
+
+
+                    <div class="action">
+                        <button class="form_button" id="form_button" type="submit">Küldés</button>
+                        <div id="loader"></div>
+                    </div>
+                </form>
+            </div>
+            <div id="form_success">
+                <p id="success_text">placeholder</p>
+                <img id="close_success" alt = "bezárás" src="images/kapcsolat_html/close_white.png">
+            </div>
+            <hr>
+            
+            <div class="contact">
+                <div class="box">
+                    <div class="contact_card">
+                        <h3>Email</h3>
+                        <p>hegyiistvan@gmail.com</p>
+                    </div>
+                    <div class="contact_card">
+                        <h3>Social Media</h3>
+                        <p><a target=”_blank” href="https://www.facebook.com/profile.php?id=100064388901578">Facebook</a></p>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="contact_card">
+                        <h3>Üzletünk</h3>
+                        <p><a target=”_blank” href="https://maps.app.goo.gl/dn15Aty8yUmBXUTB7">3300 Eger Merengő u. 1.</a></p>
+                    </div>
+                    <div class="contact_card">
+                        <h3>Nyitvatartás</h3>
+                        <p>Héftő - péntek 8:00-17:00</p>
+                        <p>Szombat 8:00</p>
+                        <p>Vasárnap zárva</p>
+                    </div>
+                </div>
+                <div class="box map">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2675.018167476735!2d20.386949376735092!3d47.89733366785546!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47408d81a5a58dd5%3A0xf6ee659aa649437b!2sDupla%20%C3%81sz%2BA%20Kft!5e0!3m2!1shu!2shu!4v1757004205323!5m2!1shu!2shu"
+                        width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <div class="box">
+                    <div class="contact_card">
+                        <h3>Munkafelmérés</h3>
+                        <p>Hegyi István üv. igazgató</p>
+                        <p>Tel: +36 30 9687-505</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="about">
+            <div class="footerbox">
+                <h3 id="shop">ÜZLETÜNK</h3>
+                <p><a target=”_blank” href="https://maps.app.goo.gl/dn15Aty8yUmBXUTB7">3300 Eger Merengő u. 1.</a></p>
+                <p>Hétfő - péntek 8:00-17:00</p>
+                <p>Szombat 8:00-12:00</p>
+                <p>Vasárnap zárva</p>
+            </div>
+            <div class="footerbox">
+                <h3>ELÉRHETŐSÉG</h3>
+                <p>Mobil: (30) 968 7505</p>
+                <p>Üzlet: (36) 410 731</p>
+                <div class="contact_icons">
+                    <a class="fb" target=”_blank” href="https://www.facebook.com/profile.php?id=100064388901578"><img class="fb"
+                            src="images/index_html/footer/facebook_white.png" alt="facebook"></a>
+                    <a href="mailto:hegyiistvan@gmail.com"><img class="mail"
+                            src="images/index_html/footer/mail_white.png" alt="email"></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="white_logo">
+            <img src="images/index_html/footer/white_logo.png" alt="fehér logo">
+        </div>
+    </footer>
+
+    <script defer src="navbar_mobile.js"></script>
+    <script defer src="validator.js"></script>
+    <script defer src="button_events.js"></script>
+    <script defer src="resize_animation.js"></script>
+
+</body>
+
+</html>
