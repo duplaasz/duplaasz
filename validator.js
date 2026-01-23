@@ -46,6 +46,7 @@ function showPreviews(files) {
 
 
 function formSuccess(success) {
+    form_success.className = '';
     loader.style.display = 'none';
     form_button.style.display = 'block';
     form_success.classList.add('active');
@@ -137,7 +138,7 @@ form.addEventListener('submit', async (e) => {
         images_error.innerHTML = `A képek mérete túl nagy! (${totalSize}/50 MB)`;
         form_error = true;
     }
-    else{
+    else {
         images_error.innerHTML = '';
     }
 
@@ -157,9 +158,13 @@ form.addEventListener('submit', async (e) => {
                 console.log("API error:", response.status, text);
                 formSuccess("server_error");
             }
-            formSuccess(true);
+            else {
+                formSuccess(true);
+            }
+
         } catch (error) {
             formSuccess("server_error");
+            console.log(error)
         }
     }
     else {
