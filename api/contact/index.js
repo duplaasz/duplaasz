@@ -14,11 +14,11 @@ const MAX_TOTAL_BYTES = 50 * 1024 * 1024;
 
 function esc(s) {
   return String(s ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#39;");
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
 }
 
 module.exports = async function (context, req) {
@@ -42,6 +42,10 @@ module.exports = async function (context, req) {
       if (n !== "images") return file.resume();
 
       const { filename, mimeType } = info;
+      if (!filename) {
+        file.resume();
+        return;
+      }
       if (!ALLOWED_MIME.has(mimeType)) {
         file.resume();
         throw new Error("Nem kép.");
@@ -74,7 +78,7 @@ module.exports = async function (context, req) {
     const links = [];
 
     for (const f of files) {
-      const safe = `${Date.now()}_${f.filename.replace(/[^\w.\-]/g,"_")}`;
+      const safe = `${Date.now()}_${f.filename.replace(/[^\w.\-]/g, "_")}`;
       const blob = container.getBlockBlobClient(safe);
 
       await blob.uploadData(f.buffer, {
@@ -85,7 +89,7 @@ module.exports = async function (context, req) {
         containerName: CONTAINER,
         blobName: safe,
         permissions: BlobSASPermissions.parse("r"),
-        expiresOn: new Date(Date.now() + 7*24*60*60*1000)
+        expiresOn: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
       }, blobService.credential).toString();
 
       links.push({
@@ -102,9 +106,9 @@ module.exports = async function (context, req) {
         <p><b>Név:</b> ${esc(fields.lastname)} ${esc(fields.firstname)}</p>
         <p><b>Telefon:</b> ${esc(fields.phone)}</p>
         <p><b>Email:</b> ${esc(fields.email)}</p>
-        <p><b>Leírás:</b><br>${esc(fields.desc).replaceAll("\n","<br>")}</p>
+        <p><b>Leírás:</b><br>${esc(fields.desc).replaceAll("\n", "<br>")}</p>
         <p><b>Képek:</b></p>
-        <ul>${links.map(l=>`<li><a href="${l.url}">${esc(l.name)}</a></li>`).join("")}</ul>
+        <ul>${links.map(l => `<li><a href="${l.url}">${esc(l.name)}</a></li>`).join("")}</ul>
       `
     });
 
