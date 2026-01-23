@@ -69,7 +69,7 @@ module.exports = async function (context, req) {
       bb.end(body);
     });
 
-    if (files.length === 0) throw new Error("Nincs kép.");
+    /* if (files.length === 0) throw new Error("Nincs kép."); */
 
     const links = [];
 
